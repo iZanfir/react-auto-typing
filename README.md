@@ -8,6 +8,8 @@
 
 ```bash
 npm install --save react-auto-typing
+or
+yarn add react-auto-typing
 ```
 
 ## Usage
