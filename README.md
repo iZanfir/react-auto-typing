@@ -12,6 +12,10 @@ or
 yarn add react-auto-typing
 ```
 
+## Demo
+
+![auto-typing](https://user-images.githubusercontent.com/75179881/123528381-f35baf80-d6bc-11eb-9940-83c4748ca77b.gif)
+
 ## Usage
 
 ```jsx
