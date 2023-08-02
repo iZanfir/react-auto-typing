@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import PropType from 'prop-types'
 
 const AutoTyping = ({
-  textRef,
-  active,
-  writeInterval,
-  deleteInterval,
-  delayToWrite,
-  delayToDelete,
+  textRef = 'Input a string',
+  active = true,
+  writeSpeed = 50,
+  deleteSpeed = 50,
+  delayToWrite = 1000,
+  delayToDelete = 1500,
   ...props
 }) => {
   const [autoTyper, setAutoTyper] = useState('')
@@ -33,8 +32,8 @@ const AutoTyping = ({
       }
 
       letterWriter()
-    }, writeInterval)
-  }, [autoTyper, textRef, writeInterval, delayToDelete, letterWriter])
+    }, writeSpeed)
+  }, [autoTyper, textRef, writeSpeed, delayToDelete, letterWriter])
 
   const remover = useCallback(() => {
     setTimeout(() => {
@@ -46,8 +45,8 @@ const AutoTyping = ({
       }
 
       letterRemover()
-    }, deleteInterval)
-  }, [autoTyper, delayToWrite, deleteInterval, letterRemover])
+    }, deleteSpeed)
+  }, [autoTyper, delayToWrite, deleteSpeed, letterRemover])
 
   useEffect(() => {
     if (active) {
@@ -61,24 +60,6 @@ const AutoTyping = ({
   }, [active, whichFuncStart, writer, remover])
 
   return <span {...props}>{autoTyper}</span>
-}
-
-AutoTyping.propTypes = {
-  textRef: PropType.string,
-  active: PropType.bool,
-  writeInterval: PropType.number,
-  deleteInterval: PropType.number,
-  delayToWrite: PropType.number,
-  delayToDelete: PropType.number
-}
-
-AutoTyping.defaultProps = {
-  textRef: 'Input a string',
-  active: true,
-  writeInterval: 50,
-  deleteInterval: 50,
-  delayToWrite: 1000,
-  delayToDelete: 1500
 }
 
 export default AutoTyping
