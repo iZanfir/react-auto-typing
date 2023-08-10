@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import PropTypes from 'prop-types'
 
-const BlinkCursor = ({ blinkSpeed = 500, active = true, ...props }) => {
+const BlinkCursor = ({
+  blinkSpeed = 500,
+  active = true,
+  style = { visibility: 'visible' }
+}) => {
   const [blinking, setBlinking] = useState({
-    style: { ...props.style }
+    style: { style }
   })
 
   const makeBlink = useCallback(() => {
@@ -13,32 +16,16 @@ const BlinkCursor = ({ blinkSpeed = 500, active = true, ...props }) => {
       const blink = { visibility: toggleBlink }
 
       setTimeout(() => {
-        setBlinking({ style: { ...props.style, ...blink } })
+        setBlinking({ style: { style, ...blink } })
       }, blinkSpeed)
     }
-  }, [blinking, blinkSpeed, active, props.style])
+  }, [blinking, blinkSpeed, active, style])
 
   useEffect(() => {
     makeBlink()
   }, [makeBlink, active])
 
-  return (
-    <span {...props} {...blinking}>
-      |
-    </span>
-  )
-}
-
-BlinkCursor.propTypes = {
-  blinkSpeed: PropTypes.number,
-  active: PropTypes.bool,
-  style: PropTypes.objectOf(PropTypes.string)
-}
-
-BlinkCursor.defaultProps = {
-  blinkSpeed: 500,
-  active: true,
-  style: { visibility: 'visible' }
+  return <span {...blinking}>|</span>
 }
 
 export default BlinkCursor
