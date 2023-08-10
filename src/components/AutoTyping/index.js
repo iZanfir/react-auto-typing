@@ -7,6 +7,8 @@ const AutoTyping = ({
   deleteSpeed = 50,
   delayToWrite = 1000,
   delayToDelete = 1500,
+  justWrite = false,
+  activeOnce = false,
   ...props
 }) => {
   const [autoTyper, setAutoTyper] = useState('')
@@ -19,6 +21,7 @@ const AutoTyping = ({
 
   const letterRemover = useCallback(() => {
     const text = autoTyper.slice(0, -1)
+
     setAutoTyper(text)
   }, [autoTyper])
 
@@ -26,7 +29,7 @@ const AutoTyping = ({
     setTimeout(() => {
       if (autoTyper.length === textRef.length) {
         setTimeout(() => {
-          setWhichFuncStart(true)
+          setWhichFuncStart(justWrite == true ? true : false)
         }, delayToDelete)
         return
       }
@@ -37,23 +40,22 @@ const AutoTyping = ({
 
   const remover = useCallback(() => {
     setTimeout(() => {
-      if (autoTyper.length === 0) {
+      if (autoTyper.length === 0 && activeOnce == false) {
         setTimeout(() => {
-          setWhichFuncStart(false)
+          setWhichFuncStart(true)
         }, delayToWrite)
         return
       }
-
       letterRemover()
     }, deleteSpeed)
   }, [autoTyper, delayToWrite, deleteSpeed, letterRemover])
 
   useEffect(() => {
     if (active) {
-      if (whichFuncStart === false) {
+      if (whichFuncStart === true) {
         writer()
       }
-      if (whichFuncStart === true) {
+      if (whichFuncStart === false) {
         remover()
       }
     }
